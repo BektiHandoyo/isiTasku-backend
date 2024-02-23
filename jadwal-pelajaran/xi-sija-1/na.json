@@ -1,0 +1,63 @@
+[
+    {
+        "hari" : "Senin",
+        "jadwal" : {
+            "07.00-07.45" : "Upacara Bendera",
+            "07.45-09.15" : "Bahasa Indonesia",
+            "09.15-10.45" : "Bahasa Inggris",
+            "10.45-11.00" : "Istirahat",
+            "11.00-12.30" : "Pendidikan Jasmani dan Olahraga",
+            "12.30-13.00" : "Istirahat Sholat Makan",
+            "13.00-14.30" : "Produk Kreatif Kewirausahaan",
+            "14.30-16.00" : "Sejarah" 
+        }
+    }, 
+    {
+        "hari" : "Selasa", 
+        "jadwal" : {
+            "07.00-08.30" : "Bahasa Inggris",
+            "08.30-10.00" : "Agama",
+            "10.00-10.15" : "Istirahat",
+            "10.15-11.45" : "Bahasa Jawa",
+            "11.45-12.30" : "Istirahat Sholat Makan",
+            "12.30-14.00" : "Produk Kreatif Kewirausahaan",
+            "14.00-14.45" : "Matematika"
+        } 
+    }, 
+    {
+        "hari" : "Rabu", 
+        "jadwal" : {
+            "07.00-08.30" : "Bahasa Jawa",
+            "08.30-10.00" : "Bahasa Inggris",
+            "10.00-10.15" : "Istirahat",
+            "10.15-11.45" : "Produk Kreatif Kewirausahaan",
+            "11.45-12.30" : "Istirahat Sholat Makan",
+            "12.30-14.00" : "Matematika",
+            "14.00-14.45" : "Agama"
+        } 
+    },
+    {
+        "hari" : "Kamis", 
+        "jadwal" : {
+            "07.00-08.30" : "Bahasa Inggris",
+            "08.30-10.00" : "Pendidikan Pancasila dan Kewarganegaraan",
+            "10.00-10.15" : "Istirahat",
+            "10.15-11.45" : "Pendidikan Jasmani dan Olahraga",
+            "11.45-12.30" : "Istirahat Sholat Makan",
+            "12.30-14.00" : "Bahasa Indonesia",
+            "14.00-14.45" : "Sejarah"
+        } 
+    },
+    {
+        "hari" : "Jumat", 
+        "jadwal" : {
+            "07.00-07.45" : "Bakti Kampus",
+            "07.45-09.15" : "Agama",
+            "09.15-10.45" : "Matematika",
+            "10.45-11.00" : "Istirahat",
+            "11.00-12.30" : "Pendidikan Pancasila dan Kewarganegaraan",
+            "12.30-13.00" : "Istirahat Sholat Makan",
+            "13.00-14.30" : "Bahasa Indonesia"
+        }
+    }
+]
