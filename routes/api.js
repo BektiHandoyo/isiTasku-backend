@@ -1,6 +1,6 @@
 const express = require('express')
 const {getBukuByMapel, getBukuById, getBukuByAngkatan} = require('../controller/buku.js');
-const { getJadwalToday, getJadwalByAngakatan } = require('../controller/jadwal.js');
+const { getJadwalToday, getJadwalByAngakatan, getAllJadwal } = require('../controller/jadwal.js');
 
 const router = express.Router();
 

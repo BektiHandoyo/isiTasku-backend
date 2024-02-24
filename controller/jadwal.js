@@ -1,10 +1,11 @@
 const jadwal = require('../models/jadwal.js');
 const dotenv = require('dotenv');
+const _ = require('lodash');
 dotenv.config();
 
 const getJadwalToday = async (req, res) => {
     const {hari, kelas, jurusan, indeks} = req.params;
-    
+
     const giliran = process.env.GILIRAN;
     
     let jadwalMingguIni;
@@ -26,7 +27,7 @@ const getJadwalToday = async (req, res) => {
     
         const jadwalSiswa = await jadwal.findOne({
             where : {
-                hari : hari,
+                hari : _.capitalize(hari),
                 kelas : kelas,
                 jurusan : jurusan.toUpperCase(),
                 indeks : indeks,
@@ -38,8 +39,10 @@ const getJadwalToday = async (req, res) => {
             return res.status(404).json({massage : "Jadwal Tidak ditemukan"})
         }
     
-        jadwalSiswa.dataValues["jadwal"] = JSON.parse(jadwalSiswa.dataValues["jadwal"]) 
-    
+        if(typeof jadwalSiswa.dataValues["jadwal"] != 'object' ){
+            jadwalSiswa.dataValues["jadwal"] = JSON.parse(jadwalSiswa.dataValues["jadwal"]) 
+        }
+
         res.json(jadwalSiswa);
     } catch (error) {
         res.status(500).json({massage : "Internal Server Error"})
@@ -81,7 +84,9 @@ const getJadwalByAngakatan = async (req, res) => {
         }
         
         for(let jadwalString of jadwalSiswa ){
-            jadwalString.dataValues["jadwal"] = JSON.parse(jadwalString.dataValues["jadwal"]) 
+            if(typeof jadwalString.dataValues["jadwal"] != 'object'){
+                jadwalString.dataValues["jadwal"] = JSON.parse(jadwalString.dataValues["jadwal"])        
+            }
         }
     
         res.json(jadwalSiswa);

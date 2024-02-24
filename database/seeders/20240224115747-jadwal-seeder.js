@@ -31,7 +31,7 @@ module.exports = {
       await queryInterface.bulkInsert('Jadwal', [{
           hari : isijadwal.hari,
           kelas : 11,
-          jurusan : "KJIJ",
+          jurusan : "SIJA",
           indeks : 1,
           giliran : "na",
           jadwal : JSON.stringify(isijadwal.jadwal),           
