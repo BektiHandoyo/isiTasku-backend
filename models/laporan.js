@@ -5,7 +5,7 @@ const siswa = require('./siswa.js');
 const kategori = require('./kategori.js');
 
 const laporan = db.define('Laporan',{
-    desc: DataTypes.STRING,
+    desc: DataTypes.TEXT,
     user_id : {
       type : DataTypes.INTEGER,
       references : {

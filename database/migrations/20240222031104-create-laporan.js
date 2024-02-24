@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       desc: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       kategori: {
         type: Sequelize.INTEGER,
