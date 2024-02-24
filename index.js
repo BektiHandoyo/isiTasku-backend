@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const models = require('./models/index.js')
 const bodyParser = require('body-parser')
 const api = require('./routes/api.js')
+const {exec} = require('child_process');
+const fs = require('fs')
 
 dotenv.config();
 

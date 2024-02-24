@@ -4,7 +4,7 @@ const {
 } = require('sequelize');
 const db = require('../config/Databse.js');
 
-const siswa = db.define('Siswas', {
+const siswa = db.define('Siswa', {
     nis:{
       type : DataTypes.NUMBER,
       primaryKey : true 
@@ -14,6 +14,8 @@ const siswa = db.define('Siswas', {
     jurusan: DataTypes.STRING,
     indeks: DataTypes.NUMBER,
     password: DataTypes.STRING
+}, {
+  freezeTableName : true
 });
 
 module.exports = siswa;

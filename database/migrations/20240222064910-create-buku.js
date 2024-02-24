@@ -2,12 +2,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Bukus', {
+    await queryInterface.createTable('Buku', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      judul : {
+        type : Sequelize.STRING(225)
       },
       kelas: {
         type: Sequelize.INTEGER(2)
@@ -17,6 +20,9 @@ module.exports = {
       },
       url_buku: {
         type: Sequelize.STRING(225)
+      },
+      daftar_isi : {
+        type : Sequelize.JSON
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Bukus');
+    await queryInterface.dropTable('Buku');
   }
 };
