@@ -13,12 +13,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       kategori: {
-        type: Sequelize.INTEGER,
-        references : {
-          model : 'Kategori',
-          key : 'id', 
-          as : 'kategori'
-        }
+        type: Sequelize.STRING,
       },
       user_id: {
         type: Sequelize.INTEGER,

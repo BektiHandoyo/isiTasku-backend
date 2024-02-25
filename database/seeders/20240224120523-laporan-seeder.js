@@ -14,7 +14,7 @@ module.exports = {
     */
     await queryInterface.bulkInsert('Laporan', [{
       desc : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi et libero orci.",
-      kategori : 5,
+      kategori : "1,5",
       user_id : 224118615,
       createdAt : new Date(),
       updatedAt : new Date()

@@ -2,7 +2,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/Databse.js');
 const siswa = require('./siswa.js');
-const kategori = require('./kategori.js');
 
 const laporan = db.define('Laporan',{
     desc: DataTypes.TEXT,
@@ -13,13 +12,7 @@ const laporan = db.define('Laporan',{
         key : "nis"
       }
     },
-    kategori : {
-      type : DataTypes.INTEGER,
-      references : {
-        model  : kategori,
-        key : "id"
-      }
-    }
+    kategori : DataTypes.STRING
 }, {
   freezeTableName : true
 });
