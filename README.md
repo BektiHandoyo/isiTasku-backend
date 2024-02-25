@@ -103,14 +103,14 @@ hasilnya:
 Method : POST\
 Content-Type : application/json\
 endpoint : **/api/login**
-```json
+```
 {
     nis : string,
     password : string
 }
 ```
 hasilnya:
-```json
+```
 {
   "access_token": string
 }
@@ -131,7 +131,7 @@ Format access_token => sebuah string base64, jika didecode mengahasilkan data de
 Method : GET\
 endpoint : **/api/kategori**\
 hasilnya :
-```json
+```
 [
     {
         id : int,
