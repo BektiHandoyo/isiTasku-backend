@@ -2,10 +2,10 @@
 
 Isitasku adalah aplikasi untuk melihat buku paket dan jadwal pembelajaran sesuai dengan sekolah pengguna. Repo ini adalaah repo untuk pengembangan server side dari Aplikasi Isitasku yang dibuat untuk lomba hackaton ITFAIR 2024
 
-# cara menggunakan rest api
+# Cara menggunakan rest api
 
 ## Buku
-### 1. Mendapatkan datar buku berdasarkan kelas \
+### 1. Mendapatkan datar buku berdasarkan kelas 
 Method : GET  
 endpoint : **/api/buku/kelas/{kelas}**\
 contoh :\
@@ -20,7 +20,7 @@ hasilnya :
 } 
 ```
 
-### 2. mendapatkan daftar buku berdasarkan mapel\
+### 2. mendapatkan daftar buku berdasarkan mapel
 Method : GET\
 endpoint : **/api/buku/mapel/{mapel}** => format mapel : **mapel-{kelas}**\
 contoh: \
@@ -35,7 +35,7 @@ hasilnya :
 } 
 ```
 
-### 3. mendapatkan detail buku berdasarkan id buku\
+### 3. mendapatkan detail buku berdasarkan id buku
 Method : GET\
 endpoint : **/api/buku/{id}**\
 contoh :\
@@ -53,7 +53,7 @@ hasilnya :
 ```
 ## Jadwal
 
-### 4. Mendapatkan Jadwal Hari ini\
+### 4. Mendapatkan Jadwal Hari ini
 Method : GET\
 endpoint : **/api/jadwal/{hari}/{kelas}/{jurusan}/{indeks}**\
 contoh :\
@@ -70,7 +70,7 @@ hasilnya:
 }
 ```
 
-### 5. Mendapatkan daftar jadwal dari kelas tertentu\
+### 5. Mendapatkan daftar jadwal dari kelas tertentu
 Method : GET\
 endpoint : **/api/jadwal/{kelas}/{jurusan}/{indeks}**\
 contoh \
@@ -99,7 +99,7 @@ hasilnya:
 
 # Login
 
-### 6. Login ke salah satu akun siswa\
+### 6. Login ke salah satu akun siswa
 Method : POST\
 Content-Type : application/json\
 endpoint : **/api/login**
@@ -127,7 +127,7 @@ Format access_token => sebuah string base64, jika didecode mengahasilkan data de
 ```
 
 # Laporan
-### 7. Mendapatkan seluruh kategori Laporan\
+### 7. Mendapatkan seluruh kategori Laporan
 Method : GET\
 endpoint : **/api/kategori**\
 hasilnya :
@@ -231,8 +231,53 @@ contohnya :
   }
 ]
 ```
+### 9.Mencari Laporan berdasarkan nis siswa
+Method : GET,
+endpoint : **/api/laporan/siswa/{nis}**\
+hasilnya :
+```
+[
+  {
+    "id": int,
+    "desc": string,
+    "user_id": int,
+    "kategori": [
+      {
+        "id": int,
+        "kategori": strinng
+      }
+    ],
+    "createdAt": datetime,
+    "updatedAt": datetime
+  }
+]
+```
+contoh : \
+**/api/laporan/siswa/224118615**
+```
+[
+  {
+    "id": 1,
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi et libero orci.",
+    "user_id": 224118615,
+    "kategori": [
+      {
+        "id": 20,
+        "kategori": "testing"
+      },
+      {
+        "id": 17,
+        "kategori": "kebersihan"
+      }
+    ],
+    "createdAt": "2024-02-25T11:56:54.576Z",
+    "updatedAt": "2024-02-25T11:56:54.576Z"
+  }
+]
+```
 
-### 9. Upload Laporan
+
+### 10. Upload Laporan
 Method : POST\
 endpoint : **/api/laporan**\
 Content-Type : application/json
@@ -259,7 +304,7 @@ hasilnya :/
 }
 ```
 
-### 10. Hapus Laporan Berdasarkan Id
+### 11. Hapus Laporan Berdasarkan Id
 Method : DELETE/
 endpoint : **/api/laporan/{id}?kategori={kategori}**\
 **Format kategori : {id kategori},{id kategori}**

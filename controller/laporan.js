@@ -33,6 +33,42 @@ const getNewestLaporan = async (req, res) => {
     }
 } 
 
+const getLaporanBySiswaId = async (req, res) => {
+    const {id_siswa} = req.params;
+
+    try {
+        const laporans = await laporan.findAll({
+            where : {
+                user_id : id_siswa
+            },
+            order : [['createdAt', 'ASC']],
+        })
+
+        if(laporans.length == 0) {
+            return res.status(404).json({message : "Belum ada Postingan"});
+        }
+
+        const response = [];
+
+        for(let laporan of laporans){
+            const categories = laporan.dataValues.kategori.split(",");
+            laporan.dataValues.kategori = [];
+            for(let category of categories ){
+                const kategoriSaatIni = await kategori.findOne({
+                    where : {id : category}
+                });
+                laporan.dataValues.kategori.push(kategoriSaatIni.dataValues);
+            }
+            response.push(laporan);
+        }
+
+        res.status(200).json(response);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message : "Internal Server Error", error : error.message});
+    }
+}
+
 const uploadLaporan = async (req, res) => {
     const {desc, id_siswa, kategori} = req.body;
 
@@ -57,7 +93,6 @@ const getAllCategories = async (req, res) => {
 }
 
 const deleteLaporanById = async (req, res) => {
-    // /api/laporan/:identifier => base64.encode(id&1,2,3)
     const {id} = req.params;
 
     const {kategori} = req.query;
@@ -91,6 +126,7 @@ const getLaporanDetail = async (req, res) => {
 
 module.exports = {
     getNewestLaporan,
+    getLaporanBySiswaId,
     uploadLaporan,
     getAllCategories,
     deleteLaporanById,
