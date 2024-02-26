@@ -21,6 +21,9 @@ module.exports = {
       url_buku: {
         type: Sequelize.STRING(225)
       },
+      url_cover : {
+        type : Sequelize.STRING(225)
+      },
       daftar_isi : {
         type : Sequelize.JSON
       },

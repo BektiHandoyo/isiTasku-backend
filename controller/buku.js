@@ -1,5 +1,8 @@
 const buku = require('../models/buku.js');
 const _ = require('lodash');
+const jadwal = require('../models/jadwal.js')
+const dotenv = require('dotenv');
+dotenv.config();
 
 const daftarMataPelajaran = {
     "bahasa-inggris" : "Bahasa Inggris",
@@ -34,7 +37,7 @@ const getBukuByMapel = async (req, res) => {
                 mapel : mapel,
                 kelas : kelas,
             },
-            attributes : ['id', 'judul', 'kelas', 'mapel']
+            attributes : ['id', 'judul', 'kelas', 'mapel', 'url_buku', 'url_cover'] 
         })
     
         res.json(daftarBuku);
@@ -50,10 +53,13 @@ const getBukuById = async (req, res) => {
     try {
         const daftarBuku = await buku.findAll({
             where : { id : id },
+
         })
 
         for(let buku of daftarBuku){
-            buku.dataValues["daftar_isi"] = JSON.parse(buku.dataValues["daftar_isi"]); 
+            if(typeof buku !== 'object'){
+                buku.dataValues["daftar_isi"] = JSON.parse(buku.dataValues["daftar_isi"]); 
+            }
         }
     
         res.json(daftarBuku);
@@ -71,7 +77,7 @@ const getBukuByAngkatan = async (req, res) => {
             where : {
                 kelas : kelas
             },
-            attributes : ['id', 'judul', 'kelas', 'mapel']
+            attributes: ['id', 'judul', 'kelas', 'mapel', 'url_buku', 'url_cover']
         }) 
     
         if(daftarBukuSiswa == null){
@@ -85,4 +91,72 @@ const getBukuByAngkatan = async (req, res) => {
     }
 }
 
-module.exports = {getBukuByMapel, getBukuById, getBukuByAngkatan}
+const getDaftarBukuByJadwalHari = async (req, res) => {
+    const {hari, kelas, indeks, jurusan} = req.params;
+
+    const giliran = process.env.GILIRAN;
+
+    let jadwalMingguIni;
+    try {
+        if(giliran == "genap"){
+            if(indeks % 2 == 0){
+                jadwalMingguIni = "kejuruan"
+            } else {
+                jadwalMingguIni = "na"
+            }
+        } else {
+            if(indeks % 2 == 0){
+                jadwalMingguIni = "na"
+            } else {
+                jadwalMingguIni = "kejuruan"
+            }
+        }
+
+        const jadwalSiswa = await jadwal.findOne({
+            where : {
+                kelas : kelas,
+                hari : _.capitalize(hari),
+                jurusan : jurusan.toUpperCase(),
+                indeks : indeks,
+                giliran : jadwalMingguIni
+            },
+            attributes : ["jadwal"]
+        }) 
+
+        const daftarJadwal = [];
+        
+        for(let jamJadwal in jadwalSiswa.dataValues.jadwal){
+            daftarJadwal.push(jadwalSiswa.dataValues.jadwal[jamJadwal]);
+        }
+
+        const bukuHariIni = [];
+
+        for(let jadwalHariIni of daftarJadwal){
+            
+            if(["Upacara Bendera", "Istirahat", "Istirahat Sholat Makan", "Bakti Kampus"].includes(jadwalHariIni)){
+                continue;
+            }
+
+            const bukuDariJadwal = await buku.findOne({
+                where : {
+                    mapel : jadwalHariIni
+                },
+                attributes : ['id', 'judul', 'kelas', 'mapel', 'url_buku', 'url_cover']
+            });
+
+            if(bukuDariJadwal == null || bukuDariJadwal == {}){
+                continue;
+            }
+
+            bukuHariIni.push(bukuDariJadwal.dataValues);
+        }
+
+        res.json(bukuHariIni);
+
+    } catch (error) {
+        res.send("error")
+        console.log(error);        
+    }
+}
+
+module.exports = {getBukuByMapel, getBukuById, getBukuByAngkatan, getDaftarBukuByJadwalHari}

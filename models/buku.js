@@ -7,6 +7,7 @@ const buku = db.define('Buku', {
     kelas: DataTypes.INTEGER,
     mapel: DataTypes.STRING,
     url_buku: DataTypes.STRING,
+    url_cover : DataTypes.STRING,
     daftar_isi : DataTypes.JSON
 }, {
     freezeTableName : true

@@ -1,5 +1,5 @@
 const express = require('express')
-const {getBukuByMapel, getBukuById, getBukuByAngkatan} = require('../controller/buku.js');
+const {getBukuByMapel, getBukuById, getBukuByAngkatan, getDaftarBukuByJadwalHari} = require('../controller/buku.js');
 const { getJadwalToday, getJadwalByAngakatan } = require('../controller/jadwal.js');
 const { login } = require('../controller/siswa.js');
 const { getNewestLaporan, uploadLaporan, getAllCategories, deleteLaporanById, getLaporanDetail, getLaporanBySiswaId } = require('../controller/laporan.js');
@@ -9,6 +9,7 @@ const router = express.Router();
 router.get('/api/buku/mapel/:mapel', getBukuByMapel);
 router.get('/api/buku/:id', getBukuById);
 router.get('/api/buku/kelas/:kelas', getBukuByAngkatan);
+router.get('/api/buku/jadwal/:hari/:kelas/:jurusan/:indeks', getDaftarBukuByJadwalHari);
 
 router.get('/api/jadwal/:hari/:kelas/:jurusan/:indeks', getJadwalToday);
 router.get('/api/jadwal/:kelas/:jurusan/:indeks', getJadwalByAngakatan);
