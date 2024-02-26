@@ -1,6 +1,7 @@
 const laporan = require('../models/laporan.js');
 const kategori = require('../models/kategori.js');
 const { default: base64 } = require('base64url');
+const {stringSimilarity} = require('string-similarity-js');
 
 const getNewestLaporan = async (req, res) => {
     try {
@@ -122,7 +123,7 @@ const getLaporanByCategories = async (req, res) => {
 
     for(let post of posts){
         for(let daftarKategori of post.kategori){
-            if(daftarKategori.kategori == kategoriLaporan){
+            if(stringSimilarity(daftarKategori.kategori, kategoriLaporan) >= 0.6){
                 response.push(post);
             }
         }
@@ -152,7 +153,6 @@ const deleteLaporanById = async (req, res) => {
         console.log(error);
         res.status(500).json({message : "Laporan gagal dihapus", error : error.message});
     }
-
 
 }
 

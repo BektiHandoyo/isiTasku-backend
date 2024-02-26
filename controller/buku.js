@@ -2,6 +2,7 @@ const buku = require('../models/buku.js');
 const _ = require('lodash');
 const jadwal = require('../models/jadwal.js')
 const dotenv = require('dotenv');
+const {Op} = require('sequelize');
 dotenv.config();
 
 const daftarMataPelajaran = {
@@ -137,9 +138,28 @@ const getDaftarBukuByJadwalHari = async (req, res) => {
                 continue;
             }
 
+            if(jadwalHariIni.mapel == "Agama"){
+                const bukuAgama = await buku.findAll({
+                    where : {
+                        kelas : kelas,
+                        mapel : {
+                            [Op.like] : `%Agama%`
+                        }
+                    },
+                    attributes : ['id', 'judul', 'kelas', 'mapel', 'url_buku', 'url_cover']
+                })
+                if(bukuAgama.length == 0) continue
+
+                for(let bA of bukuAgama){
+                    bukuHariIni.push(bA.dataValues);
+                }
+                continue;
+            }
+
             const bukuDariJadwal = await buku.findOne({
                 where : {
-                    mapel : jadwalHariIni.mapel
+                    mapel : jadwalHariIni.mapel,
+                    kelas : kelas
                 },
                 attributes : ['id', 'judul', 'kelas', 'mapel', 'url_buku', 'url_cover']
             });
