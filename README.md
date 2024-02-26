@@ -51,9 +51,41 @@ hasilnya :
     daftar_isi : json 
 }  
 ```
+### 4. Mendapatkan daftar buku untuk hari itu
+Method : GET\
+endpoint : **/api/buku/jadwal/{hari}/{kelas}/{jurusan}/{indeks}**
+hasilnya :\
+```
+[
+  {
+    "id": int,
+    "judul": string,
+    "kelas": int,
+    "mapel": string,
+    "url_buku": string,
+    "url_cover": string
+  }
+]
+```
+contoh :\
+**/api/buku/jadwal/jumat/11/sija/1**
+hasilnya:\
+```
+[
+  {
+    "id": 2,
+    "judul": "Buku Pendidikan Pancasila dan Kewarganegaraan SMA/SMK Kelas 11 Kurikulum 2021",
+    "kelas": 11,
+    "mapel": "PPKN",
+    "url_buku": "https://drive.google.com/file/d/1KXLJtEggMn190-fpOh4YIZxJJMb9nS0k/view?usp=drive_link",
+    "url_cover": "https://drive.google.com/file/d/1QEXEa7jB2TuKRzIgGElv2GBVYTKfdYlq/view?usp=drive_link"
+  }
+]
+```
+
 ## Jadwal
 
-### 4. Mendapatkan Jadwal Hari ini
+### 5. Mendapatkan Jadwal Hari ini
 Method : GET\
 endpoint : **/api/jadwal/{hari}/{kelas}/{jurusan}/{indeks}**\
 contoh :\
@@ -66,11 +98,20 @@ hasilnya:
     kelas : int,
     jurusan : string,
     indeks : int,
-    jadwal : json
+    jadwal : [
+        {
+            jam : string,
+            mapel : string
+        },
+        {
+            jam : string,
+            mapel : string
+        }
+    ]
 }
 ```
 
-### 5. Mendapatkan daftar jadwal dari kelas tertentu
+### 6. Mendapatkan daftar jadwal dari kelas tertentu
 Method : GET\
 endpoint : **/api/jadwal/{kelas}/{jurusan}/{indeks}**\
 contoh \
@@ -84,7 +125,16 @@ hasilnya:
         kelas : int,
         jurusan : string,
         indeks : int,
-        jadwal : json
+        jadwal : [
+            {
+                jam : string,
+                mapel : string
+            },
+            {
+                jam : string,
+                mapel : string
+            }
+        ]
     },
     {
         id : int,
@@ -92,14 +142,23 @@ hasilnya:
         kelas : int,
         jurusan : string,
         indeks : int,
-        jadwal : json
+        jadwal : [
+            {
+                jam : string,
+                mapel : string
+            },
+            {
+                jam : string,
+                mapel : string
+            }
+        ]
     }
 ]
 ```
 
 # Login
 
-### 6. Login ke salah satu akun siswa
+### 7. Login ke salah satu akun siswa
 Method : POST\
 Content-Type : application/json\
 endpoint : **/api/login**
@@ -115,7 +174,7 @@ hasilnya:
   "access_token": string
 }
 ```
-Format access_token => sebuah string base64, jika didecode mengahasilkan data dengan format json, perlu di parse ke bentuk json untuk diolah datanya, hasil data yang diparse akan jadi seperti berikut :
+Format access_token => sebuah string base64, jika didecode mengahasilkan data string dengan format json, perlu di parse ke bentuk json untuk diolah datanya, hasil data yang diparse akan jadi seperti berikut :
 ```
 {
     "nama": string,
@@ -127,7 +186,7 @@ Format access_token => sebuah string base64, jika didecode mengahasilkan data de
 ```
 
 # Laporan
-### 7. Mendapatkan seluruh kategori Laporan
+### 8. Mendapatkan seluruh kategori Laporan
 Method : GET\
 endpoint : **/api/kategori**\
 hasilnya :
@@ -167,7 +226,7 @@ contoh :
 ]
 ```
 
-### 8. Mendapatkan Seluruh Postingan
+### 9. Mendapatkan Seluruh Postingan
 Method : GET\
 endpoint : **/api/laporan**\
 hasilnya :
@@ -231,8 +290,8 @@ contohnya :
   }
 ]
 ```
-### 9.Mencari Laporan berdasarkan nis siswa
-Method : GET,
+### 10.Mencari Laporan berdasarkan nis siswa
+Method : GET\
 endpoint : **/api/laporan/siswa/{nis}**\
 hasilnya :
 ```
@@ -276,8 +335,88 @@ contoh : \
 ]
 ```
 
+### 11. Mencari Laporan Berdasarkan Kategori
+Method : GET\
+endpoint : **/api/laporan/kategori/{kategori}** => Kategori berupa kata-kata
+hasilnya : \
+```
+[
+    {
+      "id": int,
+      "desc": string,
+      "user_id": int,
+      "kategori": [
+        {
+          "id": int,
+          "kategori": string
+        }
+      ],
+      "createdAt": date,
+      "updatedAt": date
+    },
+    {
+        "id": int,
+        "desc": string,
+        "user_id": int,
+        "kategori": [
+          {
+            "id": int,
+            "kategori": string
+          }
+        ],
+        "createdAt": date,
+        "updatedAt": date
+      }
+]
+```
+contoh : 
+**/api/laporan/kategori/testing**
 
-### 10. Upload Laporan
+hasilnya : 
+```
+[
+  {
+    "id": 1,
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi et libero orci.",
+    "user_id": 224118615,
+    "kategori": [
+      {
+        "id": 20,
+        "kategori": "testing"
+      },
+      {
+        "id": 17,
+        "kategori": "kebersihan"
+      }
+    ],
+    "createdAt": "2024-02-25T11:56:54.576Z",
+    "updatedAt": "2024-02-25T11:56:54.576Z"
+  },
+  {
+    "id": 4,
+    "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend imperdiet quam sit amet mattis. Nunc dictum sodales tempor. Proin non placerat tortor, ac hendrerit sem. Nulla suscipit ornare vestibulum. Praesent mollis tincidunt convallis. Duis dapibus tristique tortor, sit amet bibendum nunc. Vivamus dictum diam ut lacus molestie, non volutpat arcu ullamcorper. Suspendisse posuere eu enim nec pretium. Donec sapien tortor, sollicitudin ac odio et, sagittis molestie purus. Integer ullamcorper ac nibh ac posuere",
+    "user_id": 224118587,
+    "kategori": [
+      {
+        "id": 16,
+        "kategori": "kesiswaan"
+      },
+      {
+        "id": 19,
+        "kategori": "fasilitas"
+      },
+      {
+        "id": 20,
+        "kategori": "testing"
+      }
+    ],
+    "createdAt": "2024-02-25T14:49:36.588Z",
+    "updatedAt": "2024-02-25T14:49:36.591Z"
+  }
+]
+```
+
+### 12. Upload Laporan
 Method : POST\
 endpoint : **/api/laporan**\
 Content-Type : application/json
@@ -304,7 +443,7 @@ hasilnya :/
 }
 ```
 
-### 11. Hapus Laporan Berdasarkan Id
+### 13. Hapus Laporan Berdasarkan Id
 Method : DELETE/
 endpoint : **/api/laporan/{id}?kategori={kategori}**\
 **Format kategori : {id kategori},{id kategori}**

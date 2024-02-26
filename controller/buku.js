@@ -132,14 +132,14 @@ const getDaftarBukuByJadwalHari = async (req, res) => {
         const bukuHariIni = [];
 
         for(let jadwalHariIni of daftarJadwal){
-            
-            if(["Upacara Bendera", "Istirahat", "Istirahat Sholat Makan", "Bakti Kampus"].includes(jadwalHariIni)){
+                        
+            if(["Upacara Bendera", "Istirahat", "Istirahat Sholat Makan", "Bakti Kampus"].includes(jadwalHariIni.mapel)){
                 continue;
             }
 
             const bukuDariJadwal = await buku.findOne({
                 where : {
-                    mapel : jadwalHariIni
+                    mapel : jadwalHariIni.mapel
                 },
                 attributes : ['id', 'judul', 'kelas', 'mapel', 'url_buku', 'url_cover']
             });

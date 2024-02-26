@@ -92,6 +92,46 @@ const getAllCategories = async (req, res) => {
     res.json(categories);
 }
 
+const getLaporanByCategories = async (req, res) => {
+    const kategoriLaporan = req.params.kategori
+
+    const laporans = await laporan.findAll({
+        order : [['createdAt', 'ASC']],
+    })
+
+    if(laporans.length == 0) {
+        return res.status(404).json({message : "Belum ada Postingan"});
+    }
+
+    const posts = [];
+
+    
+    for(let laporan of laporans){
+        const categories = laporan.dataValues.kategori.split(",");
+        laporan.dataValues.kategori = [];
+        for(let category of categories ){
+            const kategoriSaatIni = await kategori.findOne({
+                where : {id : category}
+            });
+            laporan.dataValues.kategori.push(kategoriSaatIni.dataValues);
+        }
+        posts.push(laporan);
+    }
+    
+    const response = []
+
+    for(let post of posts){
+        for(let daftarKategori of post.kategori){
+            if(daftarKategori.kategori == kategoriLaporan){
+                response.push(post);
+            }
+        }
+    }
+
+    res.status(200).json(response);
+
+}
+
 const deleteLaporanById = async (req, res) => {
     const {id} = req.params;
 
@@ -128,6 +168,7 @@ module.exports = {
     getNewestLaporan,
     getLaporanBySiswaId,
     uploadLaporan,
+    getLaporanByCategories,
     getAllCategories,
     deleteLaporanById,
     getLaporanDetail
